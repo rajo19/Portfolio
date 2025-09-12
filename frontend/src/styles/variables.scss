@@ -1,0 +1,67 @@
+// Global SCSS variables
+:root {
+  // Breakpoints
+  --breakpoint-xs: 600px;
+  --breakpoint-sm: 960px;
+  --breakpoint-md: 1264px;
+  --breakpoint-lg: 1904px;
+  
+  // Spacing
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  // Border radius
+  --border-radius-sm: 4px;
+  --border-radius: 6px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 24px;
+  --border-radius-pill: 9999px;
+  
+  // Transitions
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Z-index
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+  
+  // Layout
+  --header-height: 64px;
+  --footer-height: 72px;
+  --sidebar-width: 280px;
+  --sidebar-width-collapsed: 72px;
+  --content-max-width: 1440px;
+  --content-padding: 24px;
+  --container-padding: 16px;
+  
+  @media (min-width: 600px) {
+    --container-padding: 24px;
+  }
+  
+  @media (min-width: 960px) {
+    --content-padding: 32px;
+  }
+  
+  @media (min-width: 1264px) {
+    --content-padding: 48px;
+  }
+}
