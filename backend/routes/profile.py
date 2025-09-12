@@ -122,9 +122,33 @@ def upload_profile_picture():
     except Exception as e:
         return jsonify({'message': f'Upload failed: {str(e)}'}), 500
 
+@profile_bp.route('/profile_pic', methods=['GET'])
+def get_profile_pic():
+    """Get the latest profile picture"""
+    try:
+        # Ensure upload folder exists
+        ensure_upload_folder()
+        
+        # Get all files in upload directory
+        files = [f for f in os.listdir(UPLOAD_FOLDER) 
+                if os.path.isfile(os.path.join(UPLOAD_FOLDER, f)) and f.startswith('profile_')]
+        
+        if not files:
+            return jsonify({'message': 'No profile pictures found'}), 404
+            
+        # Sort files by modification time (newest first)
+        files.sort(key=lambda x: os.path.getmtime(os.path.join(UPLOAD_FOLDER, x)), reverse=True)
+        latest_file = files[0]
+        
+        # Serve the latest file
+        return send_from_directory(UPLOAD_FOLDER, latest_file)
+        
+    except Exception as e:
+        return jsonify({'message': f'Error getting profile picture: {str(e)}'}), 500
+        
 @profile_bp.route('/picture/<filename>', methods=['GET'])
 def get_profile_picture(filename):
-    """Serve profile picture file"""
+    """Serve specific profile picture file (legacy endpoint)"""
     try:
         # Security check - ensure filename is safe
         safe_filename = secure_filename(filename)
