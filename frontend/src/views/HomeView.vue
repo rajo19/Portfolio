@@ -1,5 +1,7 @@
 <script setup>
 import { useDisplay } from 'vuetify';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 const { mobile } = useDisplay();
 
@@ -62,6 +64,64 @@ const navLinks = [
     hoverColor: 'teal-darken-1'
   },
 ];
+
+const profilePictureUrl = ref('https://via.placeholder.com/300?text=Loading...');
+
+const loadProfilePicture = async () => {
+  try {
+    console.log('Attempting to load profile picture...');
+    
+    // First check if we have a default image to show while loading
+    profilePictureUrl.value = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgMzAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Mb2FkaW5nLi4uPC90ZXh0Pjwvc3ZnPg=';
+    
+    // Try to get the latest profile picture
+    const response = await axios.get('/api/profile/profile_pic', {
+      responseType: 'blob',
+      validateStatus: status => status < 500 // Don't throw for 404
+    });
+    
+    console.log('Received response with status:', response.status);
+    
+    if (response.status === 200 && response.data) {
+      // Create a local URL for the image blob
+      const imageUrl = URL.createObjectURL(response.data);
+      console.log('Created blob URL:', imageUrl);
+      
+      // Create an image element to verify the image loads
+      const img = new Image();
+      img.onload = () => {
+        console.log('Image loaded successfully');
+        profilePictureUrl.value = imageUrl;
+      };
+      img.onerror = () => {
+        console.error('Failed to load the image');
+        throw new Error('Failed to load image');
+      };
+      img.src = imageUrl;
+    } else {
+      throw new Error('No profile picture available');
+    }
+    
+  } catch (error) {
+    console.error('Error loading profile picture:', error.message);
+    // Fallback to a default profile picture
+    profilePictureUrl.value = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgMzAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBQcm9maWxlIFBpY3R1cmU8L3RleHQ+PC9zdmc+';
+  }
+};
+
+const handleImageError = (event) => {
+  console.error('Error loading profile image, using fallback');
+  // Use the same inline SVG as the fallback
+  profilePictureUrl.value = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgMzAwIDMwMCI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2VlZSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FcnJvciBMb2FkaW5nIEltYWdlPC90ZXh0Pgo8L3N2Zz4=';
+  if (event?.target) {
+    event.target.src = profilePictureUrl.value;
+  }
+};
+
+// Load the profile picture when the component mounts
+onMounted(() => {
+  loadProfilePicture();
+});
 </script>
 
 <template>
@@ -69,14 +129,16 @@ const navLinks = [
     <VRow align="center" justify="center" class="fill-height">
       <!-- Profile Picture -->
       <VCol cols="12" md="5" class="text-center">
-        <VAvatar size="300" class="elevation-12 mb-6">
-          <VImg
-            src="/profile.jpg"
-            alt="Rajorshi Tah"
-            cover
-            class="profile-image"
-          />
-        </VAvatar>
+        <div class="profile-avatar-container">
+          <div class="profile-avatar">
+            <img
+              :src="profilePictureUrl"
+              alt="Rajorshi Tah"
+              class="profile-image"
+              @error="handleImageError"
+            >
+          </div>
+        </div>
       </VCol>
 
       <!-- Content -->
@@ -113,19 +175,17 @@ const navLinks = [
 
         <!-- AI Assistant Button -->
         <div class="d-flex justify-center justify-md-start gap-4 mb-8">
-          <VBtn
-            to="/ai-assistant"
-            size="large"
-            rounded
+          <RouterLink 
+            to="/ai-assistant" 
             class="ai-assistant-btn"
           >
             <span class="magic-icon">✨</span>
             <span class="ml-2">AI Assistant</span>
-          </VBtn>
+          </RouterLink>
         </div>
 
         <!-- Social Links -->
-        <div class="social-links">
+        <div class="social-links d-flex justify-center justify-md-start">
           <VTooltip
             v-for="(social, index) in socialIcons"
             :key="index"
@@ -133,28 +193,22 @@ const navLinks = [
             location="bottom"
           >
             <template v-slot:activator="{ props }">
-              <VBtn
+              <a
                 v-bind="props"
                 :href="social.link"
                 target="_blank"
                 rel="noopener"
-                variant="flat"
-                size="large"
-                :color="social.color"
                 class="social-icon"
-                :class="{
-                  'instagram-gradient': social.label === 'Instagram',
-                  'elevation-4': true
-                }"
+                style="outline: none;"
               >
                 <VImg
                   :src="social.logo"
                   :alt="social.label"
-                  width="24"
-                  height="24"
+                  width="28"
+                  height="28"
                   contain
                 />
-              </VBtn>
+              </a>
             </template>
           </VTooltip>
         </div>
@@ -164,6 +218,45 @@ const navLinks = [
 </template>
 
 <style scoped>
+.profile-avatar-container {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f5f5f5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: #f5f5f5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #f5f5f5;
+}
+
+.profile-avatar img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+  border-radius: 50%;
+  border: 6px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+  box-sizing: border-box;
+}
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -184,28 +277,28 @@ const navLinks = [
 .social-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 30px;
   justify-content: center;
-  justify-content: flex-start;
+  margin-top: 1.5rem;
+  padding: 0 4px;
 }
 
 .social-icon {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #ffffff;
-  border-radius: 12px;
-  width: 56px;
-  height: 56px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  opacity: 0.8;
+  cursor: pointer;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
 }
 
 .social-icon:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.3);
+  opacity: 1;
+  box-shadow: 0 0px 20px rgba(154, 31, 31, 0.15);
 }
 
 .instagram-gradient {
@@ -225,14 +318,43 @@ const navLinks = [
   box-shadow: 0 4px 15px rgba(110, 142, 251, 0.4);
 }
 
-.ai-assistant-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(110, 142, 251, 0.5);
+.ai-assistant-btn :deep(.v-btn__prepend) {
+  margin-inline-end: 8px;
+  margin-inline-start: -4px;
 }
 
 .ai-assistant-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  border-radius: 9999px;
+  padding: 0 24px;
+  height: 48px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(110, 142, 251, 0.4);
   position: relative;
   overflow: hidden;
+}
+
+.ai-assistant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(110, 142, 251, 0.5);
+  text-decoration: none !important;
 }
 
 /* Navigation Buttons */
