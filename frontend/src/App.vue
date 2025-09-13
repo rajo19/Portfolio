@@ -4,7 +4,22 @@ import { useRoute } from 'vue-router';
 import { useTheme } from 'vuetify';
 import { useAuthStore } from '@/stores/auth';
 import axios from 'axios';
-import { mdiAccountCog, mdiBriefcase, mdiEmail, mdiFileDocument, mdiHome, mdiLogout, mdiPost, mdiRobot, mdiStar } from '@mdi/js';
+import {
+  mdiAccountCog,
+  mdiAccount,
+  mdiBriefcase,
+  mdiEmail,
+  mdiFileDocument,
+  mdiGithub,
+  mdiHome,
+  mdiLinkedin,
+  mdiLogout,
+  mdiMenu,
+  mdiPost,
+  mdiRobot,
+  mdiStar,
+  mdiTwitter
+} from '@mdi/js';
 
 const theme = useTheme({ defaultTheme: 'light' });
 const route = useRoute();
@@ -61,9 +76,9 @@ const navItems = [
 
 // Social media links
 const socialIcons = [
-  { icon: 'mdi-github', link: 'https://github.com/rajorshi' },
-  { icon: 'mdi-linkedin', link: 'https://linkedin.com/in/rajorshi-tah' },
-  { icon: 'mdi-twitter', link: 'https://twitter.com/rajorshitah' },
+  { icon: mdiGithub, link: 'https://github.com/rajorshi' },
+  { icon: mdiLinkedin, link: 'https://linkedin.com/in/rajorshi-tah' },
+  { icon: mdiTwitter, link: 'https://twitter.com/rajorshitah' },
 ];
 
 // Check if current route is active
@@ -94,7 +109,9 @@ const handleResize = () => {
         @click="drawer = !drawer" 
         variant="text"
         size="small"
-      />
+      >
+        <v-icon :icon="mdiMenu" />
+      </v-app-bar-nav-icon>
       
       <!-- Logo/Brand -->
       <v-toolbar-title class="font-weight-bold ml-2">
@@ -145,10 +162,10 @@ const handleResize = () => {
                   cover
                 >
                   <template v-slot:placeholder>
-                    <v-icon>mdi-account</v-icon>
+                    <v-icon :icon="mdiAccount" />
                   </template>
                 </v-img>
-                <v-icon v-else>mdi-account</v-icon>
+                <v-icon :icon="mdiAccount" />
               </v-avatar>
             </v-btn>
           </template>
@@ -231,10 +248,10 @@ const handleResize = () => {
                 cover
               >
                 <template v-slot:placeholder>
-                  <v-icon>mdi-account</v-icon>
+                  <v-icon :icon="mdiAccount" />
                 </template>
               </v-img>
-              <v-icon v-else>mdi-account</v-icon>
+              <v-icon :icon="mdiAccount" />
             </v-avatar>
           </template>
           <v-list-item-title class="text-h6 font-weight-bold">Rajorshi Tah</v-list-item-title>
