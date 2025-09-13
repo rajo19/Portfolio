@@ -3,6 +3,19 @@ import { ref, onMounted, computed } from 'vue';
 import { useDisplay } from 'vuetify';
 import axios from 'axios';
 import { useAuthStore } from '../stores/auth';
+import { 
+  mdiFileAccount, 
+  mdiFileDocument,
+  mdiFileDocumentOutline,
+  mdiFileDownload, 
+  mdiDownload, 
+  mdiCloudUpload, 
+  mdiClose, 
+  mdiCheck,
+  mdiLock,
+  mdiUpload,
+  mdiLogin 
+} from '@mdi/js';
 
 const { mobile } = useDisplay();
 const authStore = useAuthStore();
@@ -147,46 +160,56 @@ const uploadCV = async () => {
 onMounted(() => {
   checkCV();
 });
+
+// Handle file selection
+const onFileSelected = (files) => {
+  // This method is triggered when a file is selected
+  // You can add additional validation or processing here if needed
+  console.log('File selected:', files);
+};
 </script>
 
 <template>
-  <VContainer class="cv-container py-8">
-    <!-- Header -->
-    <VRow>
-      <VCol cols="12" class="text-center">
-        <h1 class="text-h3 font-weight-bold mb-2">My CV</h1>
-        <p class="text-body-1 text-medium-emphasis mb-8">
-          Download my latest resume or upload a new version (admin only)
-        </p>
-      </VCol>
-    </VRow>
+  <VContainer class="cv-container py-12">
+    
 
     <!-- CV Card -->
-    <VRow justify="center">
-      <VCol cols="12" md="8" lg="6">
-        <VCard class="pa-6" elevation="2">
+    <VRow justify="center" class="mb-12">
+      <VCol cols="12" md="10" lg="8" xl="6">
+        <VCard class="pa-6" elevation="4" rounded="lg" style="overflow: visible;">
           <!-- Download Section -->
-          <VCardTitle class="text-h5 mb-4 d-flex align-center">
-            <VIcon icon="mdi-file-account" class="mr-3" color="primary" />
-            Download CV
+          <VCardTitle class="text-h5 mb-6 d-flex align-center">
+            <VAvatar color="primary" variant="tonal" size="48" class="mr-4">
+              <VIcon :icon="mdiFileAccount" size="24" />
+            </VAvatar>
+            <div>
+              <div class="text-h5 font-weight-bold">Download CV</div>
+              <div class="text-caption text-medium-emphasis">Get the latest version of my resume</div>
+            </div>
           </VCardTitle>
           
-          <VCardText class="text-center">
-            <VIcon size="64" color="primary" class="mb-4">mdi-file-download</VIcon>
-            <p class="text-body-1 mb-4">
-              Click the button below to download my latest CV in PDF format.
+          <VCardText class="text-center px-6 py-8">
+            <VAvatar size="100" color="primary" variant="tonal" class="mb-6">
+              <VIcon :icon="mdiFileDownload" size="48" color="primary" />
+            </VAvatar>
+            <p class="text-body-1 mb-6">
+              Access my professional resume with detailed work experience, skills, and education history in a clean, printable format.
             </p>
             <VBtn
               color="primary"
               size="large"
               :loading="downloading"
-              :disabled="!hasCV"
+              :disabled="!hasCV || downloading"
               @click="downloadCV"
-              class="mb-4"
-              rounded
+              class="mt-2 px-8"
+              rounded="pill"
+              min-width="200"
+              height="48"
             >
-              <VIcon start>mdi-download</VIcon>
-              Download CV
+              <template v-slot:prepend>
+                <VIcon :icon="mdiDownload" size="20" />
+              </template>
+              <span class="text-capitalize">Download CV</span>
             </VBtn>
             
             <VAlert
@@ -208,7 +231,7 @@ onMounted(() => {
           <!-- Admin Section -->
           <template v-if="isAuthenticated">
             <VCardTitle class="text-h5 mb-4 d-flex align-center">
-              <VIcon icon="mdi-upload" class="mr-3" color="primary" />
+              <VIcon :icon="mdiUpload" class="mr-3" color="primary" />
               Upload New CV
             </VCardTitle>
             
@@ -231,17 +254,47 @@ onMounted(() => {
                 {{ uploadError }}
               </VAlert>
               
-              <VFileInput
-                v-model="file"
-                :rules="fileRules"
-                accept=".pdf,.doc,.docx"
-                label="CV File"
-                prepend-icon="mdi-file"
+              <VCard
                 variant="outlined"
-                :loading="uploading"
+                class="mb-4 text-center pa-4"
+                :class="{ 'border-primary': file }"
+                @click="!uploading && $refs.fileInput?.click()"
                 :disabled="uploading"
-                class="mb-4"
-              />
+                :ripple="!uploading"
+                :elevation="file ? 2 : 0"
+                style="cursor: pointer; transition: all 0.3s ease;"
+              >
+                <VFileInput
+                  ref="fileInput"
+                  v-model="file"
+                  :rules="fileRules"
+                  accept=".pdf,.doc,.docx"
+                  label="Choose a file or drop it here"
+                  :prepend-icon="mdiFileDocument"
+                  variant="plain"
+                  :loading="uploading"
+                  :disabled="uploading"
+                  class="d-none"
+                  @update:model-value="onFileSelected"
+                />
+                <VAvatar
+                  size="64"
+                  :color="file ? 'primary' : 'grey-lighten-3'"
+                  class="mb-2"
+                >
+                  <VIcon
+                    :icon="file ? mdiFileDocument : mdiFileDocumentOutline"
+                    size="32"
+                    :color="file ? 'white' : 'grey-darken-1'"
+                  />
+                </VAvatar>
+                <div class="text-body-1 font-weight-medium mb-1">
+                  {{ file ? file[0]?.name || 'File selected' : 'Upload your CV' }}
+                </div>
+                <div class="text-caption text-medium-emphasis">
+                  {{ file ? 'Click to change file' : 'PDF, DOC, DOCX (Max 5MB)' }}
+                </div>
+              </VCard>
               
               <VBtn
                 color="primary"
@@ -251,24 +304,31 @@ onMounted(() => {
                 @click="uploadCV"
                 rounded
               >
-                <VIcon start>mdi-upload</VIcon>
+                <VIcon :icon="mdiCloudUpload" start />
                 Upload CV
               </VBtn>
             </VCardText>
           </template>
           
-          <VCardText v-else class="text-center">
-            <VIcon size="48" color="primary" class="mb-4">mdi-lock</VIcon>
-            <p class="text-body-1 mb-4">
-              Admin access is required to upload a new CV.
+          <VCardText v-else class="text-center pa-8 pb-10">
+            <VAvatar size="100" color="grey-lighten-4" class="mb-6">
+              <VIcon :icon="mdiLock" size="48" color="grey-darken-1" />
+            </VAvatar>
+            <h3 class="text-h6 font-weight-medium mb-2">Authentication Required</h3>
+            <p class="text-body-2 text-medium-emphasis mb-6">
+              Please sign in with admin privileges to upload a new CV document.
             </p>
             <VBtn
               color="primary"
-              variant="text"
+              variant="outlined"
               :to="{ name: 'login', query: { redirect: '/cv' } }"
-              class="mt-2"
+              class="mt-2 px-6"
+              rounded="pill"
             >
-              Login
+              <template v-slot:prepend>
+                <VIcon :icon="mdiLogin" size="20" />
+              </template>
+              Sign In
             </VBtn>
           </VCardText>
         </VCard>
@@ -282,22 +342,53 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, var(--v-primary-base), #4caf50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .v-card {
   border-radius: 12px;
-  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  overflow: hidden;
 }
 
 .v-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.1) !important;
 }
 
 .v-btn {
   text-transform: none;
-  letter-spacing: normal;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.v-btn--size-large {
+  padding: 0 28px;
+  height: 48px;
+  font-size: 0.9375rem;
+}
+
+.v-avatar {
+  transition: transform 0.3s ease;
+}
+
+.v-avatar:hover {
+  transform: scale(1.05);
+}
+
+.max-w-2xl {
+  max-width: 42rem;
 }
 
 /* Responsive adjustments */
