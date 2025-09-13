@@ -4,6 +4,15 @@ import { useDisplay } from 'vuetify';
 import axios from 'axios';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import {
+  mdiRobot,
+  mdiLightbulbOutline,
+  mdiChat,
+  mdiRefresh,
+  mdiAccount,
+  mdiSend,
+  mdiPlus
+} from '@mdi/js';
 
 const { mobile } = useDisplay();
 
@@ -188,7 +197,7 @@ watch(messages, () => {
     <!-- Header -->
     <VRow>
       <VCol cols="12" class="text-center">
-        <VIcon size="64" color="primary" class="mb-4">mdi-robot</VIcon>
+        <VIcon :icon="mdiRobot" size="64" color="primary" class="mb-4" />
         <h1 class="text-h3 font-weight-bold mb-2">AI Assistant</h1>
         <p class="text-body-1 text-medium-emphasis mb-6">
           Ask me anything about Rajorshi's experience, skills, or background
@@ -201,7 +210,7 @@ watch(messages, () => {
       <VCol cols="12" md="8" lg="6">
         <VCard class="pa-4" elevation="1">
           <VCardTitle class="text-h6 mb-3">
-            <VIcon icon="mdi-lightbulb-outline" class="mr-2" />
+            <VIcon :icon="mdiLightbulbOutline" class="mr-2" />
             Suggested Questions
           </VCardTitle>
           <div class="d-flex flex-wrap gap-2">
@@ -233,13 +242,13 @@ watch(messages, () => {
                 size="small"
                 variant="text"
                 color="white"
-                prepend-icon="mdi-plus"
+                :prepend-icon="mdiPlus"
                 @click="clearChat"
                 class="mr-2"
               >
                 New Chat
               </VBtn>
-              <VIcon icon="mdi-chat" class="mr-2" />
+              <VIcon :icon="mdiChat" class="mr-2" />
               Chat with AI
             </VToolbarTitle>
             <VSpacer />
@@ -253,7 +262,7 @@ watch(messages, () => {
               @click="clearChat"
               :disabled="isTyping"
             >
-              <VIcon color="white">mdi-refresh</VIcon>
+              <VIcon :icon="mdiRefresh" color="white" />
             </VBtn>
           </VToolbar>
 
@@ -271,8 +280,8 @@ watch(messages, () => {
                 <div class="message-content">
                   <div class="d-flex align-center mb-2">
                     <VAvatar size="32" :color="message.role === 'user' ? 'primary' : 'secondary'" class="mr-2">
-                      <VIcon v-if="message.role === 'user'" color="white">mdi-account</VIcon>
-                      <VIcon v-else color="white">mdi-robot</VIcon>
+                      <VIcon v-if="message.role === 'user'" :icon="mdiAccount" color="white" />
+                      <VIcon v-else :icon="mdiRobot" color="white" />
                     </VAvatar>
                     <span class="text-caption font-weight-medium">
                       {{ message.role === 'user' ? 'You' : 'AI Assistant' }}
@@ -291,7 +300,7 @@ watch(messages, () => {
             <div v-if="isTyping" class="typing-indicator mb-4">
               <div class="d-flex align-center">
                 <VAvatar size="32" color="secondary" class="mr-2">
-                  <VIcon color="white">mdi-robot</VIcon>
+                  <VIcon :icon="mdiRobot" color="white" />
                 </VAvatar>
                 <div class="typing-dots">
                   <span></span>
@@ -333,7 +342,7 @@ watch(messages, () => {
                     @click="sendMessage"
                     class="send-btn"
                   >
-                    <VIcon>mdi-send</VIcon>
+                    <VIcon :icon="mdiSend" />
                   </VBtn>
                 </template>
               </VTextarea>

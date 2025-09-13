@@ -14,7 +14,7 @@
                   class="elevation-6"
                 >
                   <template v-slot:error>
-                    <v-icon size="100" color="grey-lighten-1">mdi-account-circle</v-icon>
+                    <v-icon :icon="mdiAccountCircle" size="100" color="grey-lighten-1" />
                   </template>
                 </v-img>
               </v-avatar>
@@ -83,7 +83,7 @@
                 href="/cv"
                 class="mr-4"
               >
-                <v-icon start>mdi-file-account</v-icon>
+                <v-icon :icon="mdiFileAccount" start />
                 View My CV
               </v-btn>
               
@@ -91,7 +91,7 @@
                 color="primary"
                 href="#contact"
               >
-                <v-icon start>mdi-email</v-icon>
+                <v-icon :icon="mdiEmail" start />
                 Contact Me
               </v-btn>
             </v-col>
@@ -106,14 +106,28 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
+import {
+  mdiAccountCircle,
+  mdiGithub,
+  mdiLinkedin,
+  mdiTwitter,
+  mdiCodeBraces,
+  mdiServer,
+  mdiDatabase,
+  mdiBrain,
+  mdiApplicationCog,
+  mdiMonitor,
+  mdiFileAccount,
+  mdiEmail
+} from '@mdi/js'
 
 const authStore = useAuthStore()
 const profileData = ref(null)
 
 const socialIcons = [
-  { icon: 'mdi-github', link: 'https://github.com/rajorshi' },
-  { icon: 'mdi-linkedin', link: 'https://linkedin.com/in/rajorshi-tah' },
-  { icon: 'mdi-twitter', link: 'https://twitter.com/rajorshitah' },
+  { icon: mdiGithub, link: 'https://github.com/rajorshi' },
+  { icon: mdiLinkedin, link: 'https://linkedin.com/in/rajorshi-tah' },
+  { icon: mdiTwitter, link: 'https://twitter.com/rajorshitah' },
 ];
 
 const profilePictureUrl = computed(() => {
@@ -146,12 +160,12 @@ const skillsByCategory = {
 };
 
 const skillIcons = {
-  'Programming': 'mdi-code-braces',
-  'Backend': 'mdi-server',
-  'Databases': 'mdi-database',
-  'AI/ML': 'mdi-brain',
-  'DevOps': 'mdi-application-cog',
-  'Frontend': 'mdi-monitor'
+  'Programming': mdiCodeBraces,
+  'Backend': mdiServer,
+  'Databases': mdiDatabase,
+  'AI/ML': mdiBrain,
+  'DevOps': mdiApplicationCog,
+  'Frontend': mdiMonitor
 };
 </script>
 

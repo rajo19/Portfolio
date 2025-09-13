@@ -64,7 +64,7 @@
           <v-list lines="two" class="bg-transparent">
             <v-list-item>
               <template v-slot:prepend>
-                <v-icon icon="mdi-email" class="me-4"></v-icon>
+                <v-icon :icon="mdiEmail" class="me-4" />
               </template>
               <v-list-item-title>Email</v-list-item-title>
               <v-list-item-subtitle>rajorshitah9@gmail.com</v-list-item-subtitle>
@@ -72,7 +72,7 @@
             
             <v-list-item>
               <template v-slot:prepend>
-                <v-icon icon="mdi-phone" class="me-4"></v-icon>
+                <v-icon :icon="mdiPhone" class="me-4" />
               </template>
               <v-list-item-title>Phone</v-list-item-title>
               <v-list-item-subtitle>(+81) 80-4817-2852 | (+91) 94748-06123</v-list-item-subtitle>
@@ -80,7 +80,7 @@
             
             <v-list-item>
               <template v-slot:prepend>
-                <v-icon icon="mdi-map-marker" class="me-4"></v-icon>
+                <v-icon :icon="mdiMapMarker" class="me-4" />
               </template>
               <v-list-item-title>Location</v-list-item-title>
               <v-list-item-subtitle>Tokyo, Japan 136-0073</v-list-item-subtitle>
@@ -99,6 +99,11 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import {
+  mdiEmail,
+  mdiPhone,
+  mdiMapMarker
+} from '@mdi/js';
 
 const form = ref({
   name: '',

@@ -12,7 +12,7 @@
     <!-- Create New Post Button (Admin Only) -->
     <v-row v-if="isAuthenticated" class="mb-6">
       <v-col cols="12" class="text-end">
-        <v-btn color="primary" prepend-icon="mdi-plus" @click="openEditor()">
+        <v-btn color="primary" :prepend-icon="mdiPlus" @click="openEditor()">
           New Post
         </v-btn>
       </v-col>
@@ -31,10 +31,10 @@
           >
             <v-card-title class="text-white">{{ post.title }}</v-card-title>
             <v-card-subtitle class="text-white d-flex align-center">
-              <v-icon small color="white" class="mr-1">mdi-account</v-icon>
+              <v-icon :icon="mdiAccount" small color="white" class="mr-1" />
               {{ post.author }}
-              <v-icon small color="white" class="mx-2">mdi-circle-small</v-icon>
-              <v-icon small color="white" class="mr-1">mdi-calendar</v-icon>
+              <v-icon :icon="mdiCircleSmall" small color="white" class="mx-2" />
+              <v-icon :icon="mdiCalendar" small color="white" class="mr-1" />
               {{ formatDate(post.createdAt) }}
             </v-card-subtitle>
           </v-img>
@@ -58,7 +58,7 @@
       </v-col>
       
       <v-col v-if="posts.length === 0" cols="12" class="text-center py-12">
-        <v-icon size="64" class="mb-4">mdi-post-outline</v-icon>
+        <v-icon :icon="mdiPostOutline" size="64" class="mb-4" />
         <h3 class="text-h6">No blog posts yet</h3>
       </v-col>
     </v-row>
@@ -76,6 +76,13 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth'
+import {
+  mdiPlus,
+  mdiAccount,
+  mdiCircleSmall,
+  mdiCalendar,
+  mdiPostOutline
+} from '@mdi/js'
 
 const router = useRouter()
 const authStore = useAuthStore()
