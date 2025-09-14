@@ -41,6 +41,12 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
 
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver: docker
+          
       # Build and push backend image
       - name: Build and push backend image
         uses: docker/build-push-action@v4
@@ -51,6 +57,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          cache: true
 
       # Build and push frontend image
       - name: Build and push frontend image
@@ -62,6 +69,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          cache: true
 
   deploy:
     name: Deploy to EC2
