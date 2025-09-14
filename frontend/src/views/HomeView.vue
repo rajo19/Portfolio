@@ -5,40 +5,48 @@ import axios from 'axios';
 
 const { mobile } = useDisplay();
 
+// Import Material Design Icons
+import { 
+  mdiGithub,
+  mdiLinkedin,
+  mdiInstagram,
+  mdiTwitter,
+  mdiBriefcase, 
+  mdiPost, 
+  mdiEmail 
+} from '@mdi/js';
+
 // Social media links with logos
 const socialIcons = [
   { 
-    icon: 'mdi-github', 
+    icon: mdiGithub, 
     logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
     link: 'https://github.com/rajorshitah', 
     color: 'grey-darken-4', 
     label: 'GitHub' 
   },
   { 
-    icon: 'mdi-linkedin', 
+    icon: mdiLinkedin, 
     logo: 'https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg',
     link: 'https://www.linkedin.com/in/rajorshi-tah', 
     color: 'blue-darken-1', 
     label: 'LinkedIn' 
   },
   { 
-    icon: 'mdi-instagram', 
+    icon: mdiInstagram, 
     logo: 'https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png',
     link: 'https://instagram.com/rajorshitah', 
     color: 'pink', 
     label: 'Instagram' 
   },
   { 
-    icon: 'mdi-twitter', 
+    icon: mdiTwitter, 
     logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitter/twitter-original.svg',
     link: 'https://twitter.com/rajorshitah', 
     color: 'light-blue', 
     label: 'Twitter' 
   },
 ];
-
-// Import Material Design Icons
-import { mdiBriefcase, mdiPost, mdiEmail } from '@mdi/js';
 
 // Navigation links with SVG icons
 const navLinks = [
@@ -168,7 +176,7 @@ onMounted(() => {
             :color="item.color"
             elevation="2"
           >
-            <VIcon :icon="item.icon" class="mr-2" />
+            <VIcon :path="item.icon" class="mr-2" />
             {{ item.title }}
           </VBtn>
         </div>

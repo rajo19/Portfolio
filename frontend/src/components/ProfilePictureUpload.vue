@@ -1,7 +1,7 @@
 <template>
   <v-card class="profile-picture-upload">
     <v-card-title>
-      <v-icon start>mdi-account-circle</v-icon>
+      <v-icon :icon="mdiAccountCircle" start />
       Profile Picture Management
     </v-card-title>
     
@@ -15,7 +15,7 @@
             class="elevation-4"
           >
             <template v-slot:error>
-              <v-icon size="80" color="grey-lighten-1">mdi-account-circle</v-icon>
+              <v-icon :icon="mdiAccountCircle" size="80" color="grey-lighten-1" />
             </template>
           </v-img>
         </v-avatar>
@@ -31,7 +31,7 @@
           v-model="selectedFile"
           label="Choose profile picture"
           accept="image/png,image/jpg,image/jpeg,image/gif,image/webp"
-          prepend-icon="mdi-camera"
+          :prepend-icon="mdiCamera"
           show-size
           :rules="fileRules"
           :loading="uploading"
@@ -83,7 +83,7 @@
             :loading="uploading"
             @click="uploadProfilePicture"
           >
-            <v-icon start>mdi-upload</v-icon>
+            <v-icon :icon="mdiUpload" start />
             Upload Picture
           </v-btn>
 
@@ -94,7 +94,7 @@
             :disabled="uploading"
             @click="deleteProfilePicture"
           >
-            <v-icon start>mdi-delete</v-icon>
+            <v-icon :icon="mdiDelete" start />
             Delete Current
           </v-btn>
 
@@ -103,7 +103,7 @@
             @click="resetForm"
             :disabled="uploading"
           >
-            <v-icon start>mdi-refresh</v-icon>
+            <v-icon :icon="mdiRefresh" start />
             Reset
           </v-btn>
         </div>
@@ -116,6 +116,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
+import {
+  mdiAccountCircle,
+  mdiCamera,
+  mdiUpload,
+  mdiDelete,
+  mdiRefresh
+} from '@mdi/js'
 
 const authStore = useAuthStore()
 

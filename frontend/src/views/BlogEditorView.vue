@@ -5,7 +5,7 @@
         <v-toolbar-title>{{ isEditing ? 'Edit Post' : 'New Post' }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="$router.go(-1)">
-          <v-icon>mdi-close</v-icon>
+          <v-icon :icon="mdiClose" />
         </v-btn>
       </v-toolbar>
       
@@ -51,11 +51,11 @@
               variant="outlined"
             >
               <v-btn value="edit" size="small">
-                <v-icon size="small" class="mr-1">mdi-pencil</v-icon>
+                <v-icon :icon="mdiPencil" size="small" class="mr-1" />
                 Edit
               </v-btn>
               <v-btn value="preview" size="small">
-                <v-icon size="small" class="mr-1">mdi-eye</v-icon>
+                <v-icon :icon="mdiEye" size="small" class="mr-1" />
                 Preview
               </v-btn>
             </v-btn-toggle>
@@ -112,6 +112,11 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
+import {
+  mdiClose,
+  mdiPencil,
+  mdiEye
+} from '@mdi/js'
 
 const route = useRoute()
 const router = useRouter()

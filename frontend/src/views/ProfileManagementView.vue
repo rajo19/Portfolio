@@ -4,17 +4,17 @@
       <v-col cols="12">
         <v-card class="pa-6">
           <v-card-title class="text-h4 mb-6">
-            <v-icon start>mdi-account-cog</v-icon>
+            <v-icon :path="mdiAccountCog" start />
             Profile Management
           </v-card-title>
           
           <!-- Authentication Check -->
           <div v-if="!authStore.isAuthenticated" class="text-center py-8">
-            <v-icon size="64" color="grey-lighten-1" class="mb-4">mdi-lock</v-icon>
+            <v-icon :path="mdiLock" size="64" color="grey-lighten-1" class="mb-4" />
             <div class="text-h6 mb-4">Authentication Required</div>
             <div class="text-body-1 mb-4">You need to be logged in to manage your profile.</div>
             <v-btn color="primary" to="/login">
-              <v-icon start>mdi-login</v-icon>
+              <v-icon :path="mdiLogin" start />
               Login
             </v-btn>
           </div>
@@ -32,6 +32,7 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import ProfilePictureUpload from '@/components/ProfilePictureUpload.vue'
+import { mdiAccountCog, mdiLock, mdiLogin } from '@mdi/js'
 
 const authStore = useAuthStore()
 </script>

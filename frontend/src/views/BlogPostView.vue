@@ -4,7 +4,7 @@
       v-if="!$vuetify.display.mobile"
       color="secondary"
       variant="text"
-      prepend-icon="mdi-arrow-left"
+      :prepend-icon="mdiArrowLeft"
       @click="$router.go(-1)"
       class="mb-4"
     >
@@ -20,14 +20,14 @@
         
         <div class="d-flex align-center justify-center mb-8">
           <v-avatar size="40" color="primary" class="mr-2">
-            <v-icon>mdi-account</v-icon>
+            <v-icon :icon="mdiAccount" />
           </v-avatar>
           <span class="text-body-1">By {{ post.author || 'Admin' }}</span>
           
           <v-divider vertical class="mx-4"></v-divider>
           
           <div class="d-flex align-center">
-            <v-icon size="small" class="mr-1">mdi-tag-outline</v-icon>
+            <v-icon :icon="mdiTagOutline" size="small" class="mr-1" />
             <div>
               <v-chip
                 v-for="(tag, index) in post.tags"
@@ -64,7 +64,7 @@
             v-if="isAuthenticated"
             color="primary"
             variant="outlined"
-            prepend-icon="mdi-pencil"
+            :prepend-icon="mdiPencil"
             @click="editPost"
           >
             Edit Post
@@ -74,7 +74,7 @@
           <v-btn
             color="primary"
             variant="text"
-            prepend-icon="mdi-share-variant"
+            :prepend-icon="mdiShareVariant"
             @click="sharePost"
           >
             Share
@@ -98,6 +98,13 @@ import axios from 'axios'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { useAuthStore } from '../stores/auth'
+import {
+  mdiArrowLeft,
+  mdiAccount,
+  mdiTagOutline,
+  mdiPencil,
+  mdiShareVariant
+} from '@mdi/js'
 
 const route = useRoute()
 const router = useRouter()

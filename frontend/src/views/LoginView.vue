@@ -3,6 +3,14 @@ import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { useAuthStore } from '@/stores/auth';
+import {
+  mdiAccountCircle,
+  mdiAccount,
+  mdiLock,
+  mdiEye,
+  mdiEyeOff,
+  mdiLogin
+} from '@mdi/js';
 
 const { mobile } = useDisplay();
 const authStore = useAuthStore();
@@ -87,7 +95,7 @@ const clearForm = () => {
         <VCard class="pa-8 elevation-8" rounded="lg">
           <!-- Header -->
           <div class="text-center mb-8">
-            <VIcon size="64" color="primary" class="mb-4">mdi-account-circle</VIcon>
+            <VIcon :icon="mdiAccountCircle" size="64" color="primary" class="mb-4" />
             <h1 class="text-h4 font-weight-bold mb-2">Welcome Back</h1>
             <p class="text-body-2 text-medium-emphasis">
               Sign in to access your admin dashboard
@@ -103,7 +111,7 @@ const clearForm = () => {
               required
               variant="outlined"
               class="mb-4"
-              prepend-inner-icon="mdi-account"
+              :prepend-inner-icon="mdiAccount"
               :disabled="loading"
               autocomplete="username"
             />
@@ -116,8 +124,8 @@ const clearForm = () => {
               variant="outlined"
               :type="showPassword ? 'text' : 'password'"
               class="mb-4"
-              prepend-inner-icon="mdi-lock"
-              :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+              :prepend-inner-icon="mdiLock"
+              :append-inner-icon="showPassword ? mdiEyeOff : mdiEye"
               @click:append-inner="showPassword = !showPassword"
               :disabled="loading"
               autocomplete="current-password"
@@ -153,7 +161,7 @@ const clearForm = () => {
               class="mb-6"
               rounded
             >
-              <VIcon start v-if="!loading">mdi-login</VIcon>
+              <VIcon :icon="mdiLogin" start v-if="!loading" />
               {{ loading ? 'Signing in...' : 'Sign In' }}
             </VBtn>
             

@@ -11,6 +11,7 @@ import {
   mdiEmail,
   mdiFileDocument,
   mdiGithub,
+  mdiHeart,
   mdiHome,
   mdiLinkedin,
   mdiLogout,
@@ -303,7 +304,7 @@ const handleResize = () => {
             {{ new Date().getFullYear() }} Rajorshi Tah
           </div>
           <div class="text-caption text-medium-emphasis">
-            Made with <v-icon color="red" size="small">mdi-heart</v-icon> in Tokyo
+            Made with <v-icon :icon="mdiHeart" color="red" size="small" /> in Tokyo
           </div>
         </div>
       </div>
