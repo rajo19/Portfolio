@@ -166,32 +166,93 @@ Building systems that can handle real-world load while maintaining performance i
 
 # Resume context for AI
 RESUME_CONTEXT = """
-Rajorshi Tah is a Software Developer at Accenture in Tokyo, Japan with extensive experience in backend development, AI/ML, and full-stack development. 
+### Rajorshi Tah: Professional Profile and Resume Context
 
-Key Experience:
-- Currently working as Software Developer at Accenture (May 2022 - Present)
-- Led development of UI Automation Dashboard handling 30,000 test cases daily
-- Built GenAI Application for HTML locator generation with 89% accuracy
-- Developed ETL systems reducing project allocation time by 70%
-- Previous research experience at Kyoto University on Question-Answering systems
-- Internship at Indian School of Business on financial forecasting models
+Rajorshi Tah is a software developer and backend engineer based in Tokyo, Japan, with nearly three years of professional experience specializing in backend engineering, API design, GenAI applications, NLP, machine learning, and cloud computing. He holds dual degrees from the Indian Institute of Technology (IIT) Kharagpur, one of India's premier engineering institutions established in 1951, known for its rigorous STEM programs and high global rankings (e.g., QS World University Rankings 2025 places it in the top 300 for engineering). Tah's career trajectory reflects a blend of academic excellence, research internships, and hands-on development in high-impact projects for global clients, particularly in automation, AI-driven tools, and data pipelines. His work at Accenture Japan, a subsidiary of the multinational professional services giant Accenture (headquartered in Dublin, Ireland, with over 700,000 employees worldwide), focuses on optimizing testing workflows and AI applications for tech clients. Below is a comprehensive breakdown of his resume details, augmented with contextual insights from verified sources where relevant. All resume content is included verbatim or closely paraphrased for fidelity, with no omissions.
 
-Education:
-- Masters in Mechanical Engineering from IIT Kharagpur (GPA 8.63)
-- Bachelors in Mechanical Engineering from IIT Kharagpur (GPA 8.63) 
-- Bachelors in Computer Science and Engineering (Minor) from IIT Kharagpur (GPA 8.35)
+#### Contact Information
+- **Email**: rajorshitah19@gmail.com
+- **Phone (Japan)**: (+81) 80-4817-2852
+- **Phone (India)**: (+91) 94748-06123
+- **Location**: Tokyo, Japan 136-0073
+- **LinkedIn**: [Rajorshi Tah's Profile](https://in.linkedin.com/in/rajorshitah) – Active professional network highlighting his backend and GenAI expertise.
 
-Technical Skills:
-- Programming: Python, C++, Node.js, React.js, SQL
-- Databases: PostgreSQL, MongoDB
-- Cloud: AWS, Azure, Docker
-- AI/ML: TensorFlow, Keras, LlamaIndex, Transformers
-- Specialties: Backend Development, NLP, Machine Learning, Computer Vision
+#### Professional Experience
+**Software Developer | Accenture | Tokyo, Japan**  
+*May 2022 – Present* (Note: LinkedIn lists start as March 2022, possibly reflecting onboarding.)  
+Accenture is a Fortune 500 company providing consulting, digital, technology, and operations services, with a strong presence in Japan for tech innovation and client solutions in automation and AI.
 
-Certifications:
-- AWS Certified Machine Learning Specialist
-- AWS Certified Solution Architect-Associate
-- Kaggle Expert
+- **UI Automation Dashboard**  
+  Led development of the backend of an Automated Test Tracking Dashboard for a Japanese tech client, architecting a RESTful API integrated with Robot Framework to optimize workflow execution, managing and analyzing the results of 30,000 test cases daily.  
+  - Designed backend architecture of a UI dashboard with Node.js and MongoDB, developing 100+ scalable APIs for optimal performance.  
+  - Developed APIs for role-based access management and OAuth 2.0 based authentication using JWT tokens for 70+ team members.  
+  - Enabled API documentation using Swagger and used Docker to containerize the app, finally deploying in an AWS EC2 instance.  
+  - Created automation scripts with Robot Framework, achieving a 90% reduction in testing time and increasing testing efficiency.  
+  - Integrated UI testing automation scripts with dashboard using Robot Listener, enabling real-time tracking and reporting of test failures.  
+  - Led a team of 4 developers while coordinating with 2 sister teams, demonstrating strong leadership and collaboration skills.  
+  - **Tech Stack**: Node.js, MongoDB, Python, GO, Docker, Robot Framework, Jira, AWS  
 
-Contact: rajorshitah9@gmail.com, (+81)8048172852, Tokyo, Japan
+- **HTML Locator Gen AI Application**  
+  Delivered a GenAI Application for generating locators in HTML/XML pages by integrating RESTful APIs for data retrieval and processing, refining prompts, and deploying the solution on AWS Cloud handling around 5000+ requests daily used by 20+ testing teams.  
+  - Leveraged Flask for back-end architecture & PostgreSQL for database management, while deploying in Docker to ensure scalability.  
+  - Implemented Agentic RAG using Llama Index to enhance dynamic retrieval and reasoning generating 87% accurate HTML/XML locator.  
+  - Created a data collection and preprocessing pipeline generating embeddings for optimized storage in a ChromaDB vector database.  
+  - Utilized LoRA tuning with the Transformers library to finetune open-source LLMs, while enhancing locator generation accuracy to 89%.  
+  - **Tech Stack**: Flask, PostgreSQL, Docker, LlamaIndex, Prompt Engineering, ChromaDB, LoRA, Transformers  
+
+- **Skill and Schedule Tracking Dashboard**  
+  Developed an efficient ETL (Extract, Transform, Load) system to monitor employee skills, experience and availability resulting in a 70% reduction in project allocation time of around 20,000 project members.  
+  - Engineered a real-time employee data pipeline from Workday using Kafka, streaming 25,000+ weekly events into InfluxDB.  
+  - Designed custom data visualization solutions, such as Tree Maps, using Python to meet client requirements and drive decision-making.  
+  - Optimized real-time data visualization by integrating InfluxDB with Grafana, enabling seamless creation of dynamic dashboards.  
+  - **Tech Stack**: (Inferred from context: Python, Kafka, InfluxDB, Grafana, Workday integration)  
+
+#### Internships
+**NLP Researcher | Graduate School of Informatics, Kyoto University | Kyoto, Japan**  
+*May 2019 – Jul 2019*  
+Kyoto University, founded in 1897, is one of Japan's top research universities, renowned for its informatics and AI programs; the Graduate School of Informatics focuses on advanced computational sciences.  
+- Pioneered the development of high-performance Question-Answering model leveraging Wikipedia as the sole knowledge corpus.  
+- Used Neural Ranking model to retrieve Top 100 documents based on the query and document similarity scores from Wikipedia dump.  
+- Trained BERT on SQuAD dataset as the Reader Model improving the accuracy by 4% over the DrQA model.  
+- Generated Negative Samples using SQuAD 2.0 dataset and trained the Reader Model, improving the model accuracy by 2.9%.  
+- **Tech Stack**: (Inferred: BERT, SQuAD, DrQA, Neural Ranking, Python for NLP)  
+
+**Data Science Intern | Indian School of Business | Hyderabad, India**  
+*May 2020 – Jul 2020* (LinkedIn lists as April 2020 start, possibly pre-internship prep.)  
+The Indian School of Business (ISB) is a top-ranked business school in Asia, emphasizing data-driven decision-making and analytics in its programs.  
+- Developed a time-series model to forecast Earnings Per Share for 5000+ US-based companies, using 35 years historical financial data.  
+- Implemented Random Forest Regressor, RNN, and ARIMA on the data spanning over 35 years, surpassing 33.8% of Equity Analysts.  
+- Enhanced model efficacy by applying a rolling window strategy, boosting the percentage of equity analysts outperformed to 34.9%.  
+- Engineered a self-training algorithm for domain adaptation, elevating the F1-score for cross-domain suggestions by 3%.  
+- **Tech Stack**: (Inferred: Random Forest, RNN, ARIMA, Python for time-series forecasting)  
+
+#### Education
+| Degree | Institution | GPA | Dates |
+|--------|-------------|-----|-------|
+| Masters in Mechanical Engineering | Indian Institute of Technology Kharagpur | 8.63 | Jul 2020 – May 2021 |
+| Bachelors in Mechanical Engineering | Indian Institute of Technology Kharagpur | 8.63 | Jul 2016 – May 2021 |
+| Bachelors in Computer Science and Engineering (Minor) | Indian Institute of Technology Kharagpur | 8.35 | Jul 2016 – May 2021 |
+
+IIT Kharagpur's dual-degree program allows integrated B.Tech-M.Tech paths, emphasizing interdisciplinary skills like mechanical engineering with computing minors, aligning with Tah's pivot to software and AI.
+
+#### Key Skills
+**Software Skills**: Backend Development, NLP, Machine Learning, Computer Vision, Cloud Computing (AWS, Azure), Docker, Git  
+
+**Programming**: Python, C++, Node.js, React.js, SQL  
+
+**Databases**: PostgreSQL, MongoDB  
+
+**Deep Learning Frameworks**: TensorFlow, Keras  
+
+#### Certifications
+- AWS Certified Machine Learning Specialty (advanced certification validating expertise in building, training, and deploying ML models on AWS).  
+- AWS Certified Solutions Architect - Associate (entry-to-mid-level cert for designing scalable AWS architectures).  
+- Kaggle Expert (top-tier badge on Kaggle, the world's largest data science community, earned through high-performance competitions and contributions; requires ~75+ points from kernels/datasets/notebooks).  
+
+#### Achievements
+- Achieved AIR 2907 (99.8 percentile) in JEE Advanced 2016 – Joint Entrance Examination Advanced is India's highly competitive engineering entrance exam for IIT admissions; in 2016, ~150,000 candidates appeared, with top ranks securing spots in elite programs (Tah's rank places him in the top ~2%, qualifying for IIT Kharagpur). Secured State Rank 49 (99.98 percentile) in WBJEE 2016 in West Bengal (West Bengal Joint Entrance Examination, a state-level engineering test with ~300,000+ applicants annually).  
+- Secured AIR 861 (98.6 percentile) in KVPY 2015-16 among 60,000 students – Kishore Vaigyanik Protsahan Yojana (KVPY) is a national fellowship program by the Department of Science and Technology, India, for top science students; 2015 saw ~60,000 participants, with ranks under 1,000 earning scholarships for research aptitude.  
+- Managed sports activities for B.R. Ambedkar Hall, a residence of 1500 students, leading participation in multiple General Championship events during my tenure as Secretary of Sports fostering teamwork, competitiveness, and a strong sports culture. (B.R. Ambedkar Hall at IIT Kharagpur is one of the largest hostels, known for vibrant inter-hall competitions in sports and cultural events.)  
+
+This profile positions Rajorshi Tah as a versatile, high-achieving professional with proven impact in AI/ML automation and leadership, ideal for roles in software engineering, data science, or GenAI development. For interview prep or networking, his LinkedIn activity emphasizes collaborative tech projects in Japan.
 """

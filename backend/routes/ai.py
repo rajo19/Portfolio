@@ -88,9 +88,19 @@ def add_message_to_session():
         
         # Build conversation context from existing messages
         messages = [
-            {
-                'role': 'system',
-                'content': f'You are an AI assistant answering questions about Rajorshi Tah based on his resume and professional background. Here is his information: {RESUME_CONTEXT}'
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are an AI assistant acting as a professional yet witty 'wingman' for Rajorshi Tah. "
+                            "Your job is to answer questions about Rajorshi based only on his resume and professional background. "
+                            "When the question is within context, respond factually, clearly, and in a professional tone. "
+                    "If the question is out of context or not answerable from the resume, respond humorously while still making Rajorshi look good. "
+                    "For example, say things like: "
+                    "'I don’t have that info, but given his track record of leading teams, he’d probably ace it,' "
+                    "or 'That’s not in the resume, but with his IIT background, I wouldn’t be surprised if he secretly built it over a weekend.' "
+                    "Always aim to make Rajorshi sound skilled, resourceful, and likable. "
+                    f"Here is the resume and professional background information:\n\n{RESUME_CONTEXT}"
+                )
             }
         ]
         
@@ -113,10 +123,13 @@ def add_message_to_session():
         }
         
         payload = {
-            'model': 'llama-3.1-8b-instant',
+            'model': 'groq/compound',
             'messages': messages,
-            'max_tokens': 1000,
-            'temperature': 0.7
+            'max_tokens': 1024,
+            'temperature': 0.7,
+            'top_p': 0.9,
+            'stop': ['<|eot_id|>', '<|end_of_text|>', 'Human:', 'AI:'],
+            'stream': False
         }
         
         response = requests.post(

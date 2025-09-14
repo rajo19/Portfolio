@@ -11,7 +11,8 @@ import {
   mdiRefresh,
   mdiAccount,
   mdiSend,
-  mdiPlus
+  mdiPlus,
+  mdiLoading
 } from '@mdi/js';
 
 const { mobile } = useDisplay();
@@ -194,17 +195,6 @@ watch(messages, () => {
 
 <template>
   <VContainer class="ai-container py-8">
-    <!-- Header -->
-    <VRow>
-      <VCol cols="12" class="text-center">
-        <VIcon :icon="mdiRobot" size="64" color="primary" class="mb-4" />
-        <h1 class="text-h3 font-weight-bold mb-2">AI Assistant</h1>
-        <p class="text-body-1 text-medium-emphasis mb-6">
-          Ask me anything about Rajorshi's experience, skills, or background
-        </p>
-      </VCol>
-    </VRow>
-
     <!-- Suggested Questions (show only when no messages except welcome) -->
     <VRow v-if="messages.length <= 1" justify="center" class="mb-6">
       <VCol cols="12" md="8" lg="6">
@@ -231,38 +221,26 @@ watch(messages, () => {
     </VRow>
 
     <!-- Chat Container -->
-    <VRow justify="center">
-      <VCol cols="12" md="8" lg="6">
+    <VRow justify="center" class="fill-height">
+      <VCol cols="12" md="8" lg="6" class="fill-height">
         <VCard class="chat-container" elevation="4">
           <!-- Chat Header -->
-          <VToolbar color="primary" density="compact">
-            <VToolbarTitle class="text-white">
-              <VBtn
-                v-if="messages.length > 1"
-                size="small"
-                variant="text"
-                color="white"
-                :prepend-icon="mdiPlus"
-                @click="clearChat"
-                class="mr-2"
-              >
-                New Chat
-              </VBtn>
-              <VIcon :icon="mdiChat" class="mr-2" />
-              Chat with AI
-            </VToolbarTitle>
-            <VSpacer />
-            <VToolbarTitle class="text-white">
-              AI Assistant
+          <VToolbar color="primary" class="elevation-0">
+            <VToolbarTitle class="text-white d-flex align-center">
+              <VIcon :icon="mdiChat" class="mr-2" size="x-large" />
+              <span class="text-h6 font-weight-medium">AI Assistant</span>
             </VToolbarTitle>
             <VSpacer />
             <VBtn
-              icon
-              variant="text"
+              v-if="messages.length > 1"
+              color="white"
+              variant="outlined"
+              :prepend-icon="mdiPlus"
               @click="clearChat"
-              :disabled="isTyping"
+              :loading="isTyping"
+              class="text-none"
             >
-              <VIcon :icon="mdiRefresh" color="white" />
+              New Chat
             </VBtn>
           </VToolbar>
 
@@ -312,42 +290,43 @@ watch(messages, () => {
           </VCardText>
 
           <!-- Input Area -->
-          <VCardActions class="pa-4 pt-0">
+          <VCardActions class="px-4 pb-4 pt-2 bg-grey-lighten-5">
             <VForm @submit.prevent="sendMessage" class="w-100">
-              <VTextarea
-                v-model="userInput"
-                label="Type your question..."
-                variant="outlined"
-                rows="2"
-                auto-grow
-                hide-details
-                :disabled="isTyping"
-                :loading="isTyping"
-                @keydown.enter.exact.prevent="sendMessage"
-                class="message-input"
-              >
-                <template v-slot:append-inner>
-                  <VProgressCircular
-                    v-if="isTyping"
-                    indeterminate
-                    size="24"
-                    color="primary"
-                    class="mr-2"
-                  />
-                  <VBtn
-                    v-else-if="userInput.trim()"
-                    icon
-                    color="primary"
-                    variant="text"
-                    @click="sendMessage"
-                    class="send-btn"
-                  >
-                    <VIcon :icon="mdiSend" />
-                  </VBtn>
-                </template>
-              </VTextarea>
-              <div class="text-caption text-medium-emphasis mt-2 text-center">
-                The AI has been trained on Rajorshi's resume and can answer questions about his experience and background.
+              <div class="position-relative">
+                <VTextarea
+                  v-model="userInput"
+                  label="Ask me anything about Rajorshi..."
+                  variant="solo"
+                  rows="1"
+                  auto-grow
+                  hide-details
+                  :disabled="isTyping"
+                  :loading="isTyping"
+                  @keydown.enter.exact.prevent="sendMessage"
+                  class="message-input elevation-1"
+                  bg-color="white"
+                  rounded="lg"
+                >
+                  <template v-slot:append-inner>
+                    <VBtn
+                      :disabled="!userInput.trim() || isTyping"
+                      :loading="isTyping"
+                      icon
+                      color="primary"
+                      variant="flat"
+                      size="small"
+                      @click="sendMessage"
+                      class="send-btn elevation-2"
+                      :class="{ 'mr-1': isTyping }"
+                    >
+                      <VIcon :icon="isTyping ? mdiLoading : mdiSend" />
+                    </VBtn>
+                  </template>
+                </VTextarea>
+                <div class="text-caption text-medium-emphasis mt-3 text-center d-flex align-center justify-center">
+                  <VIcon :icon="mdiLightbulbOutline" size="small" class="mr-1" />
+                  <span>Ask about work experience, skills, or projects</span>
+                </div>
               </div>
             </VForm>
           </VCardActions>
@@ -359,8 +338,9 @@ watch(messages, () => {
 
 <style scoped>
 .ai-container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .chat-container {
@@ -379,7 +359,7 @@ watch(messages, () => {
 }
 
 .message {
-  max-width: 80%;
+  max-width: 85%;
   margin-left: 0;
   margin-right: auto;
   animation: fadeIn 0.3s ease;
